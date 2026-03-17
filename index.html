@@ -3,36 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Покерне рішення</title>
+  <title>Покерне рішення — Telegram</title>
+  <meta name="description" content="Мікро-лендинг із покерною інтригою, який прогріває користувача та переводить у Telegram-канал." />
+
+  <!-- TikTok Pixel Code Start -->
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject = t;
+      var ttq = w[t] = w[t] || [];
+      ttq.methods = ["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+      ttq.setAndDefer = function (obj, method) {
+        obj[method] = function () {
+          obj.push([method].concat(Array.prototype.slice.call(arguments, 0)));
+        };
+      };
+      for (var i = 0; i < ttq.methods.length; i++) {
+        ttq.setAndDefer(ttq, ttq.methods[i]);
+      }
+      ttq.instance = function (id) {
+        var instance = ttq._i[id] || [];
+        for (var j = 0; j < ttq.methods.length; j++) {
+          ttq.setAndDefer(instance, ttq.methods[j]);
+        }
+        return instance;
+      };
+      ttq.load = function (id, options) {
+        var url = "https://analytics.tiktok.com/i18n/pixel/events.js";
+        ttq._i = ttq._i || {};
+        ttq._i[id] = [];
+        ttq._i[id]._u = url;
+        ttq._t = ttq._t || {};
+        ttq._t[id] = +new Date();
+        ttq._o = ttq._o || {};
+        ttq._o[id] = options || {};
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = url + "?sdkid=" + id + "&lib=" + t;
+        var firstScript = document.getElementsByTagName("script")[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+      };
+
+      ttq.load('D426HGBC77UA61AHKGG0');
+      ttq.page();
+    }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
+
   <style>
     :root {
-      --bg: #0b0b0d;
-      --bg2: #111114;
-      --card: rgba(255,255,255,0.06);
+      --bg: #09090b;
+      --bg-soft: #111214;
+      --panel: rgba(255,255,255,0.06);
+      --panel-2: rgba(255,255,255,0.04);
       --line: rgba(255,255,255,0.12);
-      --text: #f4f1e8;
-      --muted: #c9c1b1;
+      --text: #f4efe4;
+      --muted: #c8c0b1;
       --gold: #d8b36a;
-      --gold-soft: rgba(216,179,106,0.18);
-      --red: #c52828;
-      --red-hover: #e03a3a;
-      --white-btn: rgba(255,255,255,0.1);
-      --shadow: 0 20px 50px rgba(0,0,0,0.45);
-      --radius: 24px;
+      --gold-soft: rgba(216,179,106,0.16);
+      --red: #c62828;
+      --red-hover: #df3b3b;
+      --white-btn: rgba(255,255,255,0.08);
+      --shadow: 0 24px 60px rgba(0,0,0,0.42);
+      --radius: 26px;
+      --tg-link: "https://t.me/+fdWUAplzySo4MjRi";
     }
 
     * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       padding: 0;
-      background:
-        radial-gradient(circle at 50% 35%, rgba(18,93,55,0.45), transparent 35%),
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04), transparent 30%),
-        radial-gradient(circle at 80% 15%, rgba(255,255,255,0.03), transparent 25%),
-        linear-gradient(180deg, #080809 0%, #0e0e10 100%);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100%;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(16, 94, 56, 0.46), transparent 34%),
+        radial-gradient(circle at 20% 16%, rgba(255,255,255,0.04), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(255,255,255,0.03), transparent 20%),
+        linear-gradient(180deg, #070708 0%, #0d0d0f 100%);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       overflow-x: hidden;
     }
 
@@ -47,20 +96,20 @@
 
     body::before {
       background:
-        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 20%),
-        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.03), transparent 25%),
-        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.02), transparent 30%);
+        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.05), transparent 18%),
+        radial-gradient(circle at 73% 24%, rgba(255,255,255,0.03), transparent 22%),
+        radial-gradient(circle at 50% 82%, rgba(255,255,255,0.02), transparent 28%);
       filter: blur(40px);
       animation: smoke 12s ease-in-out infinite alternate;
     }
 
     body::after {
-      background: linear-gradient(to bottom, rgba(216,179,106,0.04), transparent 25%, transparent 75%, rgba(216,179,106,0.04));
+      background: linear-gradient(to bottom, rgba(216,179,106,0.05), transparent 24%, transparent 76%, rgba(216,179,106,0.04));
     }
 
     @keyframes smoke {
-      0% { transform: translateY(0) scale(1); opacity: 0.8; }
-      100% { transform: translateY(-12px) scale(1.03); opacity: 1; }
+      0% { transform: translateY(0) scale(1); opacity: .82; }
+      100% { transform: translateY(-14px) scale(1.04); opacity: 1; }
     }
 
     .wrap {
@@ -74,25 +123,27 @@
 
     .app {
       width: 100%;
-      max-width: 460px;
-      min-height: 780px;
+      max-width: 470px;
+      min-height: 820px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)),
-        linear-gradient(180deg, rgba(16,60,38,0.65) 0%, rgba(8,20,13,0.8) 100%);
-      border: 1px solid var(--line);
-      border-radius: 32px;
+        linear-gradient(180deg, rgba(16,57,38,0.68) 0%, rgba(7,16,11,0.84) 100%);
       box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
     }
 
     .table-glow {
       position: absolute;
-      inset: 12% 10% auto;
-      height: 260px;
+      left: 10%;
+      right: 10%;
+      top: 11%;
+      height: 270px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(25,122,73,0.55) 0%, rgba(18,72,46,0.3) 45%, transparent 72%);
+      background: radial-gradient(circle, rgba(23,120,73,0.56) 0%, rgba(18,72,46,0.28) 46%, transparent 72%);
       filter: blur(10px);
       pointer-events: none;
     }
@@ -103,13 +154,13 @@
       right: 24px;
       top: 24px;
       height: 1px;
-      background: linear-gradient(to right, transparent, rgba(216,179,106,0.65), transparent);
+      background: linear-gradient(to right, transparent, rgba(216,179,106,0.7), transparent);
     }
 
     .screen {
       display: none;
-      min-height: 780px;
-      padding: 54px 28px 30px;
+      min-height: 820px;
+      padding: 56px 28px 30px;
       position: relative;
     }
 
@@ -121,41 +172,41 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .top-tag {
       color: var(--gold);
-      font-size: 13px;
-      letter-spacing: 0.18em;
+      font-size: 12px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      opacity: 0.9;
+      opacity: .95;
       margin-bottom: 18px;
     }
 
-    h1 {
+    h1, h2 {
       margin: 0;
-      font-size: 42px;
-      line-height: 0.98;
       font-weight: 800;
       letter-spacing: -0.03em;
+    }
+
+    h1 {
+      font-size: 42px;
+      line-height: .98;
     }
 
     h2 {
-      margin: 0 0 10px 0;
       font-size: 34px;
       line-height: 1.02;
-      font-weight: 800;
-      letter-spacing: -0.03em;
     }
 
-    p.lead {
+    .lead {
       color: var(--muted);
       font-size: 17px;
-      line-height: 1.5;
+      line-height: 1.55;
       margin: 18px 0 0;
-      max-width: 360px;
+      max-width: 370px;
     }
 
     .hero-area {
@@ -165,7 +216,7 @@
     .poker-visual {
       position: relative;
       height: 300px;
-      margin: 22px 0 8px;
+      margin: 26px 0 6px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -173,18 +224,18 @@
 
     .cards-stack {
       position: relative;
-      width: 260px;
-      height: 170px;
+      width: 270px;
+      height: 180px;
     }
 
     .card {
-      width: 110px;
-      height: 156px;
+      width: 114px;
+      height: 160px;
       border-radius: 16px;
       position: absolute;
-      top: 6px;
+      top: 8px;
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04)),
+        linear-gradient(135deg, rgba(255,255,255,0.17), rgba(255,255,255,0.04)),
         rgba(16,16,18,0.95);
       border: 1px solid rgba(255,255,255,0.16);
       box-shadow: 0 16px 30px rgba(0,0,0,0.35);
@@ -194,47 +245,46 @@
       color: var(--gold);
       font-weight: 800;
       font-size: 28px;
+      transition: transform .8s ease, opacity .5s ease, filter .3s ease;
       backface-visibility: hidden;
-      transform-style: preserve-3d;
-      transition: transform .8s ease, opacity .5s ease;
     }
 
     .card.back {
       background:
-        linear-gradient(135deg, rgba(216,179,106,0.28), rgba(255,255,255,0.05)),
-        #631616;
-      color: rgba(255,255,255,0.9);
+        linear-gradient(135deg, rgba(216,179,106,0.24), rgba(255,255,255,0.05)),
+        #651919;
+      color: rgba(255,255,255,0.92);
       font-size: 30px;
     }
 
-    .card.one { left: 12px; transform: rotate(-10deg); }
-    .card.two { right: 12px; transform: rotate(10deg); }
+    .card.one { left: 14px; transform: rotate(-11deg); }
+    .card.two { right: 14px; transform: rotate(11deg); }
 
     .center-chip {
       position: absolute;
-      bottom: 18px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      width: 78px;
-      height: 78px;
+      width: 82px;
+      height: 82px;
       border-radius: 50%;
       display: grid;
       place-items: center;
       background:
-        radial-gradient(circle, rgba(216,179,106,0.2), rgba(216,179,106,0.06)),
-        rgba(0,0,0,0.38);
-      border: 1px solid rgba(216,179,106,0.35);
+        radial-gradient(circle, rgba(216,179,106,0.2), rgba(216,179,106,0.05)),
+        rgba(0,0,0,0.34);
+      border: 1px solid rgba(216,179,106,0.34);
       color: var(--gold);
-      font-size: 13px;
-      letter-spacing: 0.16em;
+      font-size: 12px;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      box-shadow: 0 0 35px rgba(216,179,106,0.1);
+      box-shadow: 0 0 35px rgba(216,179,106,0.08);
     }
 
     .btns {
       display: grid;
       gap: 12px;
-      margin-top: 22px;
+      margin-top: 24px;
     }
 
     button, a.cta {
@@ -243,16 +293,17 @@
       outline: none;
       cursor: pointer;
       border-radius: 16px;
-      height: 58px;
-      padding: 0 18px;
+      min-height: 58px;
+      padding: 14px 18px;
       font-size: 17px;
       font-weight: 700;
       letter-spacing: -0.01em;
-      transition: transform .15s ease, opacity .15s ease, background .2s ease;
+      transition: transform .15s ease, opacity .15s ease, background .2s ease, border-color .2s ease;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
     }
 
     button:hover, a.cta:hover { transform: translateY(-1px); }
@@ -261,7 +312,7 @@
     .btn-red {
       background: linear-gradient(180deg, var(--red-hover), var(--red));
       color: #fff;
-      box-shadow: 0 10px 24px rgba(197,40,40,0.25);
+      box-shadow: 0 12px 24px rgba(197,40,40,0.24);
     }
 
     .btn-light {
@@ -272,25 +323,27 @@
 
     .bottom-note {
       font-size: 13px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.54);
       text-align: center;
       margin-top: 14px;
     }
 
-    .reveal-box {
-      margin-top: 20px;
+    .reveal-box,
+    .soft-box {
+      margin-top: 22px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 24px;
       padding: 22px;
-      min-height: 250px;
     }
+
+    .reveal-box { min-height: 270px; }
 
     .reveal-status {
       color: var(--gold);
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.17em;
       margin-bottom: 18px;
     }
 
@@ -299,19 +352,19 @@
       font-weight: 800;
       line-height: 1.05;
       margin-top: 16px;
-      min-height: 70px;
+      min-height: 72px;
     }
 
     .small-text {
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
       font-size: 16px;
       margin-top: 10px;
     }
 
     .feature-list {
       display: grid;
-      gap: 14px;
+      gap: 13px;
       margin-top: 24px;
     }
 
@@ -319,9 +372,9 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 18px;
-      padding: 16px 16px;
+      padding: 16px;
       color: var(--text);
-      line-height: 1.4;
+      line-height: 1.45;
       font-size: 16px;
     }
 
@@ -343,13 +396,13 @@
       border: 1px solid rgba(255,255,255,0.12);
       background:
         linear-gradient(135deg, rgba(216,179,106,0.2), rgba(255,255,255,0.04)),
-        #601818;
+        #621919;
       color: rgba(255,255,255,0.92);
       display: grid;
       place-items: center;
       font-size: 34px;
       cursor: pointer;
-      transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease;
+      transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease, filter .2s ease;
       box-shadow: 0 10px 20px rgba(0,0,0,0.18);
     }
 
@@ -362,7 +415,7 @@
     .pick-card.selected,
     .pick-card.revealed {
       border-color: rgba(216,179,106,0.7);
-      box-shadow: 0 0 0 1px rgba(216,179,106,0.3), 0 14px 26px rgba(0,0,0,0.25);
+      box-shadow: 0 0 0 1px rgba(216,179,106,0.26), 0 14px 26px rgba(0,0,0,0.25);
     }
 
     .pick-card.good {
@@ -397,9 +450,15 @@
 
     .final-box p {
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
       font-size: 16px;
       margin: 10px 0 22px;
+    }
+
+    .micro-proof {
+      margin-top: 14px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.62);
     }
 
     .footer-mini {
@@ -413,42 +472,24 @@
       display: none !important;
     }
 
-    .secondary-links {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
+    .pulse {
+      animation: pulse 1.6s infinite;
     }
 
-    .subtle-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 48px;
-      border-radius: 14px;
-      text-decoration: none;
-      color: var(--muted);
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      transition: transform .15s ease, border-color .2s ease, color .2s ease;
-    }
-
-    .subtle-link:hover {
-      transform: translateY(-1px);
-      border-color: rgba(216,179,106,0.28);
-      color: var(--text);
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(197,40,40,0.38); }
+      70% { box-shadow: 0 0 0 14px rgba(197,40,40,0); }
+      100% { box-shadow: 0 0 0 0 rgba(197,40,40,0); }
     }
 
     @media (max-width: 520px) {
+      .wrap { padding: 0; }
       .app {
         min-height: 100vh;
         border-radius: 0;
         max-width: 100%;
       }
-
-      .screen {
-        min-height: 100vh;
-      }
-
+      .screen { min-height: 100vh; }
       h1 { font-size: 38px; }
       h2 { font-size: 31px; }
     }
@@ -465,8 +506,11 @@
         <div>
           <div class="top-tag">Poker decision</div>
           <div class="hero-area">
-            <h1>Він пішов ва-банк.<br>Блеф… чи справжня сила?</h1>
-            <p class="lead">У тебе лише одна мить, щоб прийняти рішення. Перевірити тиск суперника чи відступити й зберегти стек? Зроби свій вибір і подивись, чим закінчиться ця роздача.</p>
+            <h1>Він пішов ва-банк.<br>Тисне… чи справді має руку?</h1>
+            <p class="lead">
+              У тебе лише кілька секунд на рішення. Перевірити, відступити чи спробувати
+              прочитати суперника? Зроби свій хід — і подивись, що ховалося за цим олл-іном.
+            </p>
           </div>
 
           <div class="poker-visual">
@@ -483,7 +527,7 @@
             <button class="btn-red" onclick="goToReveal('check')">🔴 Перевірити</button>
             <button class="btn-light" onclick="goToReveal('fold')">⚪ Скинути карти</button>
           </div>
-          <div class="bottom-note">У покері кожне рішення має ціну</div>
+          <div class="bottom-note">У покері правда відкривається тільки після рішення</div>
         </div>
       </section>
 
@@ -492,24 +536,31 @@
         <div>
           <div class="top-tag">Розкриття</div>
           <h2>Карти відкриваються…</h2>
-          <p class="lead">Зараз стане зрозуміло, що стояло за цим пушем: холодний розрахунок, тиск чи готова рука.</p>
+          <p class="lead">
+            Ще мить — і стане зрозуміло, що це було: холодний блеф, тиск у потрібний момент
+            чи рука, з якою йдуть до кінця.
+          </p>
 
           <div class="reveal-box">
             <div class="reveal-status" id="revealStatus">аналізуємо ситуацію</div>
+
             <div class="poker-visual" style="height: 180px; margin: 0;">
               <div class="cards-stack">
                 <div class="card back one" id="revealCard1">🂠</div>
                 <div class="card back two" id="revealCard2">🂠</div>
               </div>
             </div>
+
             <div class="reveal-result" id="revealResult">...</div>
-            <div class="small-text" id="revealSubtext">Іноді одна роздача показує про гравця більше, ніж цілий стіл.</div>
+            <div class="small-text" id="revealSubtext">
+              Іноді одна роздача показує про гравця більше, ніж цілий вечір за столом.
+            </div>
           </div>
         </div>
 
         <div>
           <div class="btns">
-            <button class="btn-red hidden" id="afterRevealBtn" onclick="goToEngage()">Далі</button>
+            <button class="btn-red hidden" id="afterRevealBtn" onclick="goToEngage()">Показати далі</button>
           </div>
         </div>
       </section>
@@ -518,18 +569,24 @@
       <section class="screen" id="screen3">
         <div>
           <div class="top-tag">Гра тільки починається</div>
-          <h2>Хочеш бачити такі моменти щодня?</h2>
-          <p class="lead">У нашому каналі — не просто красиві роздачі, а ситуації, які вчать читати суперника, розуміти тиск і бачити логіку сильних рішень.</p>
+          <h2>Хочеш більше таких моментів?</h2>
+          <p class="lead">
+            У Telegram-каналі щодня з’являються роздачі, де все вирішують деталі:
+            тиск, таймінг, помилки, добори, блефи й рішення, які хочеться розбирати до кінця.
+          </p>
 
           <div class="feature-list">
-            <div class="feature"><span>♠</span> розбори реальних роздач простими словами</div>
-            <div class="feature"><span>♠</span> стратегічні підказки для мислення за столом</div>
-            <div class="feature"><span>♠</span> блефи, пастки та рішення професіоналів</div>
+            <div class="feature"><span>♠</span> роздачі, які хочеться додивитися до шоудауну</div>
+            <div class="feature"><span>♠</span> ситуації, де одна деталь змінює весь розклад</div>
+            <div class="feature"><span>♠</span> жива напруга гри та відчуття моменту всередині каналу</div>
           </div>
 
-          <div style="margin-top: 30px;">
-            <div class="reveal-status">Міні-гра</div>
-            <div class="small-text">Обери карту. Одна з них підкаже правильний напрямок. Інколи саме інтуїція вирішує все.</div>
+          <div class="soft-box" style="margin-top: 28px;">
+            <div class="reveal-status">Останній вибір</div>
+            <div class="small-text">
+              Обери карту. Іноді інтуїція підказує правильний напрямок ще до того, як усе можна
+              пояснити логікою.
+            </div>
 
             <div class="pick-grid" id="pickGrid">
               <div class="pick-card" data-index="0">🂠</div>
@@ -544,7 +601,7 @@
 
         <div>
           <div class="btns">
-            <button class="btn-red hidden" id="toFinalBtn" onclick="goToFinal()">Перейти далі</button>
+            <button class="btn-red hidden" id="toFinalBtn" onclick="goToFinal()">Відкрити канал</button>
           </div>
         </div>
       </section>
@@ -553,51 +610,61 @@
       <section class="screen" id="screen4">
         <div>
           <div class="top-tag">Фінальний вибір</div>
-          <h2>Приєднуйся до каналу</h2>
-          <p class="lead">Отримуй нові роздачі, покерні ситуації, розбори та сильні рішення щодня. Без зайвого шуму — тільки контент, який реально затягує в гру.</p>
+          <h2>Приєднуйся до Telegram-каналу</h2>
+          <p class="lead">
+            Усе найцікавіше — всередині. Нові роздачі, сильні моменти, напруга рішень і той
+            самий ритм гри, заради якого хочеться повертатися знову.
+          </p>
 
           <div class="final-box">
-            <div class="telegram-badge">🔥 Щоденний покерний контент</div>
+            <div class="telegram-badge">🔥 Нові роздачі • жива напруга • атмосфера гри</div>
             <h2 style="font-size: 28px;">Переходь у Telegram</h2>
-            <p>Підписуйся на канал, щоб дивитися нові роздачі, помічати блефи швидше та краще відчувати логіку гри в ключових моментах.</p>
-            <a class="cta btn-red" href="https://t.me/your_channel" target="_blank" rel="noopener noreferrer">
+            <p>
+              Саме там починається справжнє занурення: свіжі покерні ситуації, розбори,
+              емоція рішень і формат, у якому ти не просто дивишся — а входиш у ритм гри
+              разом з іншими.
+            </p>
+
+            <a
+              class="cta btn-red pulse"
+              href="https://t.me/+fdWUAplzySo4MjRi"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="trackTelegramClick('final_main_cta')"
+            >
               Перейти в Telegram
             </a>
 
-            <div class="secondary-links">
-              <a class="subtle-link" href="https://your-play-link.com" target="_blank" rel="noopener noreferrer">
-                Почати грати онлайн
-              </a>
+            <div class="micro-proof">
+              Перейди в канал і увійди в атмосферу гри вже з першої роздачі.
             </div>
-
-            <p style="margin-top:18px; font-size:14px; color:rgba(255,255,255,0.56);">
-              Хочеш не лише дивитися роздачі, а й відчути напругу гри самостійно? Можеш акуратно перейти та спробувати себе в онлайн-форматі, а за свіжими розборами й добірками повертайся в канал.
-            </p>
           </div>
         </div>
 
         <div class="footer-mini">
-          poker funnel / micro landing / telegram conversion
+          poker funnel / telegram conversion
         </div>
       </section>
     </div>
   </div>
 
   <script>
+    const TELEGRAM_LINK = "https://t.me/+fdWUAplzySo4MjRi";
+
     const results = [
       {
         title: "Це був блеф.",
-        subtext: "Тиск, ритм і сміливий пуш — усе виглядало переконливо. Саме такі моменти й відрізняють гру на інстинкті від гри з холодною головою.",
+        subtext: "Усе виглядало переконливо. Саме тому такі роздачі так складно читати з першого погляду.",
         cards: ["A♠", "5♦"]
       },
       {
         title: "Це була сильна рука.",
-        subtext: "Іноді найпростіша правда виглядає як вистава. За агресією стояла реальна сила, а не спроба налякати.",
+        subtext: "Іноді найнебезпечніша агресія — це не вистава, а чиста сила, з якою йдуть до кінця.",
         cards: ["K♠", "K♥"]
       },
       {
-        title: "Ти був близько…",
-        subtext: "Найнебезпечніші ситуації в покері — ті, де блеф і сила виглядають майже однаково. Саме тут вирішує досвід.",
+        title: "Ти був близько.",
+        subtext: "Найцікавіші моменти — ті, де блеф і сила виглядають майже однаково переконливо.",
         cards: ["Q♣", "J♣"]
       }
     ];
@@ -605,14 +672,28 @@
     let selectedReveal = null;
     let winningPick = Math.floor(Math.random() * 3);
 
+    function safeTrack(eventName, payload = {}) {
+      try {
+        if (typeof ttq !== "undefined" && ttq.track) {
+          ttq.track(eventName, payload);
+        }
+      } catch (e) {}
+    }
+
     function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function goToReveal(action) {
-      showScreen('screen2');
+      safeTrack("ClickButton", {
+        button_name: action === "check" ? "check_button" : "fold_button",
+        page_section: "screen1"
+      });
+
+      showScreen("screen2");
+      safeTrack("ViewContent", { content_name: "screen2_reveal" });
       playReveal(action);
     }
 
@@ -620,16 +701,16 @@
       const reveal = results[Math.floor(Math.random() * results.length)];
       selectedReveal = reveal;
 
-      const status = document.getElementById('revealStatus');
-      const result = document.getElementById('revealResult');
-      const sub = document.getElementById('revealSubtext');
-      const c1 = document.getElementById('revealCard1');
-      const c2 = document.getElementById('revealCard2');
-      const btn = document.getElementById('afterRevealBtn');
+      const status = document.getElementById("revealStatus");
+      const result = document.getElementById("revealResult");
+      const sub = document.getElementById("revealSubtext");
+      const c1 = document.getElementById("revealCard1");
+      const c2 = document.getElementById("revealCard2");
+      const btn = document.getElementById("afterRevealBtn");
 
-      btn.classList.add('hidden');
+      btn.classList.add("hidden");
       result.textContent = "...";
-      sub.textContent = action === 'fold'
+      sub.textContent = action === "fold"
         ? "Ти вирішив відступити. Але зараз побачимо, чи було це обережністю… чи втраченим шансом."
         : "Ти натиснув перевірку. Ще мить — і стане ясно, чи це був сміливий колл, чи дорога помилка.";
 
@@ -656,38 +737,45 @@
         status.textContent = "результат";
         result.textContent = reveal.title;
         sub.textContent = reveal.subtext;
-        btn.classList.remove('hidden');
+        btn.classList.remove("hidden");
+
+        safeTrack("CompleteRegistration", {
+          funnel_step: "reveal_complete",
+          reveal_result: reveal.title
+        });
       }, 2400);
     }
 
     function goToEngage() {
-      showScreen('screen3');
+      showScreen("screen3");
+      safeTrack("ViewContent", { content_name: "screen3_engage" });
       initPickGame();
     }
 
     function initPickGame() {
-      const cards = document.querySelectorAll('.pick-card');
-      const pickResult = document.getElementById('pickResult');
-      const pickSubtext = document.getElementById('pickSubtext');
-      const toFinalBtn = document.getElementById('toFinalBtn');
+      const cards = document.querySelectorAll(".pick-card");
+      const pickResult = document.getElementById("pickResult");
+      const pickSubtext = document.getElementById("pickSubtext");
+      const toFinalBtn = document.getElementById("toFinalBtn");
 
       pickResult.textContent = "";
       pickSubtext.textContent = "";
-      toFinalBtn.classList.add('hidden');
+      toFinalBtn.classList.add("hidden");
+      winningPick = Math.floor(Math.random() * 3);
 
       cards.forEach(card => {
-        card.classList.remove('selected', 'revealed', 'good');
+        card.classList.remove("selected", "revealed", "good");
         card.textContent = "🂠";
         card.onclick = () => {
           if (pickResult.textContent) return;
 
           const index = Number(card.dataset.index);
-          card.classList.add('selected');
+          card.classList.add("selected");
 
           cards.forEach((c, i) => {
-            c.classList.add('revealed');
+            c.classList.add("revealed");
             if (i === winningPick) {
-              c.classList.add('good');
+              c.classList.add("good");
               c.textContent = "A♠";
             } else {
               c.textContent = i === index ? "10♦" : "7♣";
@@ -695,20 +783,40 @@
           });
 
           if (index === winningPick) {
-            pickResult.textContent = "Влучне рішення.";
-            pickSubtext.textContent = "Ти відчув правильний хід. Саме з таких деталей починається сильне розуміння гри. У каналі — ще більше подібних ситуацій.";
+            pickResult.textContent = "Точне відчуття моменту.";
+            pickSubtext.textContent = "Саме заради таких роздач і повертаються знову. У каналі — ще більше подібних ситуацій, де напруга тримає до кінця.";
           } else {
-            pickResult.textContent = "Майже вгадав.";
-            pickSubtext.textContent = "У покері одна дрібниця часто змінює все. Саме тому розбори, спостереження й практика дають найбільшу перевагу.";
+            pickResult.textContent = "Майже.";
+            pickSubtext.textContent = "У цьому і весь азарт: одна дрібниця — і вся ситуація читається зовсім інакше. У каналі таких моментів значно більше.";
           }
 
-          toFinalBtn.classList.remove('hidden');
+          toFinalBtn.classList.remove("hidden");
+
+          safeTrack("ClickButton", {
+            button_name: "mini_game_card_pick",
+            page_section: "screen3",
+            picked_index: index,
+            was_correct: index === winningPick
+          });
         };
       });
     }
 
     function goToFinal() {
-      showScreen('screen4');
+      showScreen("screen4");
+      safeTrack("ViewContent", { content_name: "screen4_final" });
+    }
+
+    function trackTelegramClick(source) {
+      safeTrack("ClickButton", {
+        button_name: "telegram_cta",
+        source: source
+      });
+
+      safeTrack("SubmitForm", {
+        destination: TELEGRAM_LINK,
+        source: source
+      });
     }
   </script>
 </body>
