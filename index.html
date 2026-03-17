@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Покерне рішення</title>
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --bg2: #111114;
+      --card: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.12);
+      --text: #f4f1e8;
+      --muted: #c9c1b1;
+      --gold: #d8b36a;
+      --gold-soft: rgba(216,179,106,0.18);
+      --red: #c52828;
+      --red-hover: #e03a3a;
+      --white-btn: rgba(255,255,255,0.1);
+      --shadow: 0 20px 50px rgba(0,0,0,0.45);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(18,93,55,0.45), transparent 35%),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04), transparent 30%),
+        radial-gradient(circle at 80% 15%, rgba(255,255,255,0.03), transparent 25%),
+        linear-gradient(180deg, #080809 0%, #0e0e10 100%);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05), transparent 20%),
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.03), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.02), transparent 30%);
+      filter: blur(40px);
+      animation: smoke 12s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      background: linear-gradient(to bottom, rgba(216,179,106,0.04), transparent 25%, transparent 75%, rgba(216,179,106,0.04));
+    }
+
+    @keyframes smoke {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-12px) scale(1.03); opacity: 1; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 460px;
+      min-height: 780px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)),
+        linear-gradient(180deg, rgba(16,60,38,0.65) 0%, rgba(8,20,13,0.8) 100%);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(12px);
+    }
+
+    .table-glow {
+      position: absolute;
+      inset: 12% 10% auto;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(25,122,73,0.55) 0%, rgba(18,72,46,0.3) 45%, transparent 72%);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .gold-line {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 24px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(216,179,106,0.65), transparent);
+    }
+
+    .screen {
+      display: none;
+      min-height: 780px;
+      padding: 54px 28px 30px;
+      position: relative;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      animation: fadeIn .45s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .top-tag {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 0.98;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin: 0 0 10px 0;
+      font-size: 34px;
+      line-height: 1.02;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    p.lead {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.5;
+      margin: 18px 0 0;
+      max-width: 340px;
+    }
+
+    .hero-area {
+      padding-top: 8px;
+    }
+
+    .poker-visual {
+      position: relative;
+      height: 300px;
+      margin: 22px 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cards-stack {
+      position: relative;
+      width: 260px;
+      height: 170px;
+    }
+
+    .card {
+      width: 110px;
+      height: 156px;
+      border-radius: 16px;
+      position: absolute;
+      top: 6px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04)),
+        rgba(16,16,18,0.95);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 28px;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform .8s ease, opacity .5s ease;
+    }
+
+    .card.back {
+      background:
+        linear-gradient(135deg, rgba(216,179,106,0.28), rgba(255,255,255,0.05)),
+        #631616;
+      color: rgba(255,255,255,0.9);
+      font-size: 30px;
+    }
+
+    .card.one { left: 12px; transform: rotate(-10deg); }
+    .card.two { right: 12px; transform: rotate(10deg); }
+
+    .center-chip {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle, rgba(216,179,106,0.2), rgba(216,179,106,0.06)),
+        rgba(0,0,0,0.38);
+      border: 1px solid rgba(216,179,106,0.35);
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      box-shadow: 0 0 35px rgba(216,179,106,0.1);
+    }
+
+    .btns {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button, a.cta {
+      appearance: none;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+      border-radius: 16px;
+      height: 58px;
+      padding: 0 18px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      transition: transform .15s ease, opacity .15s ease, background .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button:hover, a.cta:hover { transform: translateY(-1px); }
+    button:active, a.cta:active { transform: translateY(1px); }
+
+    .btn-red {
+      background: linear-gradient(180deg, var(--red-hover), var(--red));
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(197,40,40,0.25);
+    }
+
+    .btn-light {
+      background: var(--white-btn);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .bottom-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    .reveal-box {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 250px;
+    }
+
+    .reveal-status {
+      color: var(--gold);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 18px;
+    }
+
+    .reveal-result {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.05;
+      margin-top: 16px;
+      min-height: 70px;
+    }
+
+    .small-text {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .feature {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 16px 16px;
+      color: var(--text);
+      line-height: 1.4;
+      font-size: 16px;
+    }
+
+    .feature span {
+      color: var(--gold);
+      margin-right: 8px;
+    }
+
+    .pick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .pick-card {
+      height: 132px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        linear-gradient(135deg, rgba(216,179,106,0.2), rgba(255,255,255,0.04)),
+        #601818;
+      color: rgba(255,255,255,0.92);
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+    }
+
+    .pick-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(216,179,106,0.45);
+      box-shadow: 0 14px 24px rgba(0,0,0,0.24);
+    }
+
+    .pick-card.selected,
+    .pick-card.revealed {
+      border-color: rgba(216,179,106,0.7);
+      box-shadow: 0 0 0 1px rgba(216,179,106,0.3), 0 14px 26px rgba(0,0,0,0.25);
+    }
+
+    .pick-card.good {
+      background:
+        linear-gradient(135deg, rgba(216,179,106,0.24), rgba(255,255,255,0.06)),
+        #173a28;
+    }
+
+    .final-box {
+      margin-top: 18px;
+      padding: 24px;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at top, rgba(216,179,106,0.18), transparent 45%),
+        rgba(255,255,255,0.05);
+      border: 1px solid rgba(216,179,106,0.22);
+      text-align: center;
+    }
+
+    .telegram-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .final-box p {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 16px;
+      margin: 10px 0 22px;
+    }
+
+    .footer-mini {
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 12px;
+      margin-top: 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      .app {
+        min-height: 100vh;
+        border-radius: 0;
+        max-width: 100%;
+      }
+
+      .screen {
+        min-height: 100vh;
+      }
+
+      h1 { font-size: 38px; }
+      h2 { font-size: 31px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="app">
+      <div class="table-glow"></div>
+      <div class="gold-line"></div>
+
+      <!-- SCREEN 1 -->
+      <section class="screen active" id="screen1">
+        <div>
+          <div class="top-tag">Poker decision</div>
+          <div class="hero-area">
+            <h1>Він пішов ва-банк.<br>Блеф… чи монстр?</h1>
+            <p class="lead">Ти бачиш лише мить перед рішенням. Натисни — і дізнайся, що було насправді.</p>
+          </div>
+
+          <div class="poker-visual">
+            <div class="cards-stack">
+              <div class="card back one">🂠</div>
+              <div class="card back two">🂠</div>
+              <div class="center-chip">all-in</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="btns">
+            <button class="btn-red" onclick="goToReveal('check')">🔴 Перевірити</button>
+            <button class="btn-light" onclick="goToReveal('fold')">⚪ Скинути карти</button>
+          </div>
+          <div class="bottom-note">Обидва варіанти ведуть у сценарій</div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2 -->
+      <section class="screen" id="screen2">
+        <div>
+          <div class="top-tag">Розкриття</div>
+          <h2>Карти відкриваються…</h2>
+          <p class="lead">Ще секунда — і ти побачиш, що стояло за ва-банком.</p>
+
+          <div class="reveal-box">
+            <div class="reveal-status" id="revealStatus">аналізуємо рішення</div>
+            <div class="poker-visual" style="height: 180px; margin: 0;">
+              <div class="cards-stack">
+                <div class="card back one" id="revealCard1">🂠</div>
+                <div class="card back two" id="revealCard2">🂠</div>
+              </div>
+            </div>
+            <div class="reveal-result" id="revealResult">...</div>
+            <div class="small-text" id="revealSubtext">Іноді одна секунда вирішує все.</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="btns">
+            <button class="btn-red hidden" id="afterRevealBtn" onclick="goToEngage()">Далі</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3 -->
+      <section class="screen" id="screen3">
+        <div>
+          <div class="top-tag">Втягуємо в гру</div>
+          <h2>Хочеш бачити такі роздачі щодня?</h2>
+          <p class="lead">Ми показуємо реальні покерні ситуації, де рішення приймається за секунди.</p>
+
+          <div class="feature-list">
+            <div class="feature"><span>♠</span> розбори роздач</div>
+            <div class="feature"><span>♠</span> покерні стратегії</div>
+            <div class="feature"><span>♠</span> блефи професіоналів</div>
+          </div>
+
+          <div style="margin-top: 30px;">
+            <div class="reveal-status">Міні-гра</div>
+            <div class="small-text">Вибери карту. Одна з них відкриє правильне рішення.</div>
+
+            <div class="pick-grid" id="pickGrid">
+              <div class="pick-card" data-index="0">🂠</div>
+              <div class="pick-card" data-index="1">🂠</div>
+              <div class="pick-card" data-index="2">🂠</div>
+            </div>
+
+            <div class="reveal-result" id="pickResult" style="font-size: 26px; min-height: 64px; margin-top: 22px;"></div>
+            <div class="small-text" id="pickSubtext"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="btns">
+            <button class="btn-red hidden" id="toFinalBtn" onclick="goToFinal()">Перейти далі</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4 -->
+      <section class="screen" id="screen4">
+        <div>
+          <div class="top-tag">Фінал</div>
+          <h2>Приєднуйся до каналу</h2>
+          <p class="lead">Нові роздачі щодня. Більше блефів, рішень і ситуацій, де потрібно мислити як профі.</p>
+
+          <div class="final-box">
+            <div class="telegram-badge">🔥 Telegram poker channel</div>
+            <h2 style="font-size: 28px;">Тисни та переходь</h2>
+            <p>Після кліку користувач одразу потрапляє в Telegram-канал із щоденним контентом.</p>
+            <a class="cta btn-red" href="https://t.me/your_channel" target="_blank" rel="noopener noreferrer">
+              Перейти в Telegram
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-mini">
+          poker funnel / micro landing / telegram conversion
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const results = [
+      {
+        title: "Це був блеф.",
+        subtext: "Тиск, таймінг і ва-банк — класична пастка для суперника.",
+        cards: ["A♠", "5♦"]
+      },
+      {
+        title: "Це був монстр.",
+        subtext: "Іноді агресія — не театр, а чиста сила.",
+        cards: ["K♠", "K♥"]
+      },
+      {
+        title: "Ти майже вгадав…",
+        subtext: "Найсильніші роздачі виглядають як блеф. І навпаки.",
+        cards: ["Q♣", "J♣"]
+      }
+    ];
+
+    let selectedReveal = null;
+    let winningPick = Math.floor(Math.random() * 3);
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToReveal(action) {
+      showScreen('screen2');
+      playReveal(action);
+    }
+
+    function playReveal(action) {
+      const reveal = results[Math.floor(Math.random() * results.length)];
+      selectedReveal = reveal;
+
+      const status = document.getElementById('revealStatus');
+      const result = document.getElementById('revealResult');
+      const sub = document.getElementById('revealSubtext');
+      const c1 = document.getElementById('revealCard1');
+      const c2 = document.getElementById('revealCard2');
+      const btn = document.getElementById('afterRevealBtn');
+
+      btn.classList.add('hidden');
+      result.textContent = "...";
+      sub.textContent = action === 'fold'
+        ? "Ти вирішив скинути. Але правда все одно відкриється."
+        : "Ти натиснув перевірку. Подивимось, що там було.";
+
+      c1.className = "card back one";
+      c2.className = "card back two";
+      c1.textContent = "🂠";
+      c2.textContent = "🂠";
+
+      status.textContent = "аналізуємо рішення";
+
+      setTimeout(() => {
+        status.textContent = "відкриваємо першу карту";
+        c1.className = "card one";
+        c1.textContent = reveal.cards[0];
+      }, 900);
+
+      setTimeout(() => {
+        status.textContent = "відкриваємо другу карту";
+        c2.className = "card two";
+        c2.textContent = reveal.cards[1];
+      }, 1700);
+
+      setTimeout(() => {
+        status.textContent = "результат";
+        result.textContent = reveal.title;
+        sub.textContent = reveal.subtext;
+        btn.classList.remove('hidden');
+      }, 2400);
+    }
+
+    function goToEngage() {
+      showScreen('screen3');
+      initPickGame();
+    }
+
+    function initPickGame() {
+      const cards = document.querySelectorAll('.pick-card');
+      const pickResult = document.getElementById('pickResult');
+      const pickSubtext = document.getElementById('pickSubtext');
+      const toFinalBtn = document.getElementById('toFinalBtn');
+
+      pickResult.textContent = "";
+      pickSubtext.textContent = "";
+      toFinalBtn.classList.add('hidden');
+
+      cards.forEach(card => {
+        card.classList.remove('selected', 'revealed', 'good');
+        card.textContent = "🂠";
+        card.onclick = () => {
+          if (pickResult.textContent) return;
+
+          const index = Number(card.dataset.index);
+          card.classList.add('selected');
+
+          cards.forEach((c, i) => {
+            c.classList.add('revealed');
+            if (i === winningPick) {
+              c.classList.add('good');
+              c.textContent = "A♠";
+            } else {
+              c.textContent = i === index ? "10♦" : "7♣";
+            }
+          });
+
+          if (index === winningPick) {
+            pickResult.textContent = "Ти обрав правильно…";
+            pickSubtext.textContent = "Такі моменти і створюють азарт. У каналі — нові роздачі щодня.";
+          } else {
+            pickResult.textContent = "Майже. Правильна карта була поруч.";
+            pickSubtext.textContent = "Саме тому такі сценарії затягують. У Telegram — ще більше.";
+          }
+
+          toFinalBtn.classList.remove('hidden');
+        };
+      });
+    }
+
+    function goToFinal() {
+      showScreen('screen4');
+    }
+  </script>
+</body>
+</html>
