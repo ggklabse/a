@@ -155,7 +155,7 @@
       font-size: 17px;
       line-height: 1.5;
       margin: 18px 0 0;
-      max-width: 340px;
+      max-width: 360px;
     }
 
     .hero-area {
@@ -413,6 +413,31 @@
       display: none !important;
     }
 
+    .secondary-links {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .subtle-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      transition: transform .15s ease, border-color .2s ease, color .2s ease;
+    }
+
+    .subtle-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(216,179,106,0.28);
+      color: var(--text);
+    }
+
     @media (max-width: 520px) {
       .app {
         min-height: 100vh;
@@ -440,8 +465,8 @@
         <div>
           <div class="top-tag">Poker decision</div>
           <div class="hero-area">
-            <h1>Він пішов ва-банк.<br>Блеф… чи монстр?</h1>
-            <p class="lead">Ти бачиш лише мить перед рішенням. Натисни — і дізнайся, що було насправді.</p>
+            <h1>Він пішов ва-банк.<br>Блеф… чи справжня сила?</h1>
+            <p class="lead">У тебе лише одна мить, щоб прийняти рішення. Перевірити тиск суперника чи відступити й зберегти стек? Зроби свій вибір і подивись, чим закінчиться ця роздача.</p>
           </div>
 
           <div class="poker-visual">
@@ -458,7 +483,7 @@
             <button class="btn-red" onclick="goToReveal('check')">🔴 Перевірити</button>
             <button class="btn-light" onclick="goToReveal('fold')">⚪ Скинути карти</button>
           </div>
-          <div class="bottom-note">Обидва варіанти ведуть у сценарій</div>
+          <div class="bottom-note">У покері кожне рішення має ціну</div>
         </div>
       </section>
 
@@ -467,10 +492,10 @@
         <div>
           <div class="top-tag">Розкриття</div>
           <h2>Карти відкриваються…</h2>
-          <p class="lead">Ще секунда — і ти побачиш, що стояло за ва-банком.</p>
+          <p class="lead">Зараз стане зрозуміло, що стояло за цим пушем: холодний розрахунок, тиск чи готова рука.</p>
 
           <div class="reveal-box">
-            <div class="reveal-status" id="revealStatus">аналізуємо рішення</div>
+            <div class="reveal-status" id="revealStatus">аналізуємо ситуацію</div>
             <div class="poker-visual" style="height: 180px; margin: 0;">
               <div class="cards-stack">
                 <div class="card back one" id="revealCard1">🂠</div>
@@ -478,7 +503,7 @@
               </div>
             </div>
             <div class="reveal-result" id="revealResult">...</div>
-            <div class="small-text" id="revealSubtext">Іноді одна секунда вирішує все.</div>
+            <div class="small-text" id="revealSubtext">Іноді одна роздача показує про гравця більше, ніж цілий стіл.</div>
           </div>
         </div>
 
@@ -492,19 +517,19 @@
       <!-- SCREEN 3 -->
       <section class="screen" id="screen3">
         <div>
-          <div class="top-tag">Втягуємо в гру</div>
-          <h2>Хочеш бачити такі роздачі щодня?</h2>
-          <p class="lead">Ми показуємо реальні покерні ситуації, де рішення приймається за секунди.</p>
+          <div class="top-tag">Гра тільки починається</div>
+          <h2>Хочеш бачити такі моменти щодня?</h2>
+          <p class="lead">У нашому каналі — не просто красиві роздачі, а ситуації, які вчать читати суперника, розуміти тиск і бачити логіку сильних рішень.</p>
 
           <div class="feature-list">
-            <div class="feature"><span>♠</span> розбори роздач</div>
-            <div class="feature"><span>♠</span> покерні стратегії</div>
-            <div class="feature"><span>♠</span> блефи професіоналів</div>
+            <div class="feature"><span>♠</span> розбори реальних роздач простими словами</div>
+            <div class="feature"><span>♠</span> стратегічні підказки для мислення за столом</div>
+            <div class="feature"><span>♠</span> блефи, пастки та рішення професіоналів</div>
           </div>
 
           <div style="margin-top: 30px;">
             <div class="reveal-status">Міні-гра</div>
-            <div class="small-text">Вибери карту. Одна з них відкриє правильне рішення.</div>
+            <div class="small-text">Обери карту. Одна з них підкаже правильний напрямок. Інколи саме інтуїція вирішує все.</div>
 
             <div class="pick-grid" id="pickGrid">
               <div class="pick-card" data-index="0">🂠</div>
@@ -527,17 +552,27 @@
       <!-- SCREEN 4 -->
       <section class="screen" id="screen4">
         <div>
-          <div class="top-tag">Фінал</div>
+          <div class="top-tag">Фінальний вибір</div>
           <h2>Приєднуйся до каналу</h2>
-          <p class="lead">Нові роздачі щодня. Більше блефів, рішень і ситуацій, де потрібно мислити як профі.</p>
+          <p class="lead">Отримуй нові роздачі, покерні ситуації, розбори та сильні рішення щодня. Без зайвого шуму — тільки контент, який реально затягує в гру.</p>
 
           <div class="final-box">
-            <div class="telegram-badge">🔥 Telegram poker channel</div>
-            <h2 style="font-size: 28px;">Тисни та переходь</h2>
-            <p>Після кліку користувач одразу потрапляє в Telegram-канал із щоденним контентом.</p>
+            <div class="telegram-badge">🔥 Щоденний покерний контент</div>
+            <h2 style="font-size: 28px;">Переходь у Telegram</h2>
+            <p>Підписуйся на канал, щоб дивитися нові роздачі, помічати блефи швидше та краще відчувати логіку гри в ключових моментах.</p>
             <a class="cta btn-red" href="https://t.me/your_channel" target="_blank" rel="noopener noreferrer">
               Перейти в Telegram
             </a>
+
+            <div class="secondary-links">
+              <a class="subtle-link" href="https://your-play-link.com" target="_blank" rel="noopener noreferrer">
+                Почати грати онлайн
+              </a>
+            </div>
+
+            <p style="margin-top:18px; font-size:14px; color:rgba(255,255,255,0.56);">
+              Хочеш не лише дивитися роздачі, а й відчути напругу гри самостійно? Можеш акуратно перейти та спробувати себе в онлайн-форматі, а за свіжими розборами й добірками повертайся в канал.
+            </p>
           </div>
         </div>
 
@@ -552,17 +587,17 @@
     const results = [
       {
         title: "Це був блеф.",
-        subtext: "Тиск, таймінг і ва-банк — класична пастка для суперника.",
+        subtext: "Тиск, ритм і сміливий пуш — усе виглядало переконливо. Саме такі моменти й відрізняють гру на інстинкті від гри з холодною головою.",
         cards: ["A♠", "5♦"]
       },
       {
-        title: "Це був монстр.",
-        subtext: "Іноді агресія — не театр, а чиста сила.",
+        title: "Це була сильна рука.",
+        subtext: "Іноді найпростіша правда виглядає як вистава. За агресією стояла реальна сила, а не спроба налякати.",
         cards: ["K♠", "K♥"]
       },
       {
-        title: "Ти майже вгадав…",
-        subtext: "Найсильніші роздачі виглядають як блеф. І навпаки.",
+        title: "Ти був близько…",
+        subtext: "Найнебезпечніші ситуації в покері — ті, де блеф і сила виглядають майже однаково. Саме тут вирішує досвід.",
         cards: ["Q♣", "J♣"]
       }
     ];
@@ -595,15 +630,15 @@
       btn.classList.add('hidden');
       result.textContent = "...";
       sub.textContent = action === 'fold'
-        ? "Ти вирішив скинути. Але правда все одно відкриється."
-        : "Ти натиснув перевірку. Подивимось, що там було.";
+        ? "Ти вирішив відступити. Але зараз побачимо, чи було це обережністю… чи втраченим шансом."
+        : "Ти натиснув перевірку. Ще мить — і стане ясно, чи це був сміливий колл, чи дорога помилка.";
 
       c1.className = "card back one";
       c2.className = "card back two";
       c1.textContent = "🂠";
       c2.textContent = "🂠";
 
-      status.textContent = "аналізуємо рішення";
+      status.textContent = "аналізуємо ситуацію";
 
       setTimeout(() => {
         status.textContent = "відкриваємо першу карту";
@@ -660,11 +695,11 @@
           });
 
           if (index === winningPick) {
-            pickResult.textContent = "Ти обрав правильно…";
-            pickSubtext.textContent = "Такі моменти і створюють азарт. У каналі — нові роздачі щодня.";
+            pickResult.textContent = "Влучне рішення.";
+            pickSubtext.textContent = "Ти відчув правильний хід. Саме з таких деталей починається сильне розуміння гри. У каналі — ще більше подібних ситуацій.";
           } else {
-            pickResult.textContent = "Майже. Правильна карта була поруч.";
-            pickSubtext.textContent = "Саме тому такі сценарії затягують. У Telegram — ще більше.";
+            pickResult.textContent = "Майже вгадав.";
+            pickSubtext.textContent = "У покері одна дрібниця часто змінює все. Саме тому розбори, спостереження й практика дають найбільшу перевагу.";
           }
 
           toFinalBtn.classList.remove('hidden');
